@@ -49,9 +49,11 @@ public class ShoppingListActivity extends AppCompatActivity {
 
     public void onAddItem(View view) {
         String item = new_item.getText().toString();
-        items.add(item);
-        adapter.notifyDataSetChanged();
-        new_item.setText("");
-        list.smoothScrollToPosition(items.size()-1);
+        if (!item.isEmpty()) {
+            items.add(item);
+            adapter.notifyDataSetChanged();
+            new_item.setText("");
+            list.smoothScrollToPosition(items.size() - 1);
+        }
     }
 }

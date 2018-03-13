@@ -34,6 +34,7 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingItem> {
         CheckBox checkBox = (CheckBox) root.findViewById(R.id.checkBox);
         ShoppingItem item = getItem(position);
         checkBox.setText(item.getText());
+        checkBox.setChecked(item.isChecked());
 
         return root;
     }

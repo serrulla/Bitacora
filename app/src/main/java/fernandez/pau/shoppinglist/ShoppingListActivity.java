@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -19,6 +20,8 @@ import java.util.Locale;
 
 public class ShoppingListActivity extends AppCompatActivity {
 
+    public static final String FILENAME = "items.txt";
+    public static final int MAX_BYTES = 10000;
     private ListView list;
     private ArrayList<ShoppingItem> items; // Model de dades
     private ShoppingListAdapter adapter;
@@ -26,18 +29,44 @@ public class ShoppingListActivity extends AppCompatActivity {
 
     private void writeItemList() {
         try {
-            FileOutputStream fos = openFileOutput("items.txt", Context.MODE_PRIVATE);
+            FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
             for (ShoppingItem item : items) {
                 String line = String.format("%s;%b\n", item.getText(), item.isChecked());
                 fos.write(line.getBytes());
             }
+            fos.close();
         }
         catch (FileNotFoundException e) {
-            // TODO: Mirar què fem en el cas que el fitxer no existeixi...
+
         }
         catch (IOException e) {
             Toast.makeText(this, "No puc escriure el fitxer", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private boolean readItemList() {
+        items = new ArrayList<>();
+        try {
+            FileInputStream fis = openFileInput(FILENAME);
+            byte[] buffer = new byte[MAX_BYTES];
+            int nread = fis.read(buffer);
+            if (nread > 0) {
+                String content = new String(buffer, 0, nread);
+                String[] lines = content.split("\n");
+                for (String line : lines) {
+                    if (!line.isEmpty()) {
+                        String[] parts = line.split(";");
+                        items.add(new ShoppingItem(parts[0], parts[1].equals("true")));
+                    }
+                }
+            }
+            fis.close();
+            return true;
+        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
+            Toast.makeText(this, "No puc llegir el fitxer", Toast.LENGTH_SHORT).show();
+        }
+        return false;
     }
 
     @Override
@@ -51,11 +80,9 @@ public class ShoppingListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list);
 
-        // Omplim el model de dades
-        items = new ArrayList<>();
-        items.add(new ShoppingItem("Patates", true));
-        items.add(new ShoppingItem("Paper WC"));
-        items.add(new ShoppingItem("Ketchup"));
+        if (!readItemList()) {
+            Toast.makeText(this, "Benvingut al ShoppingList(TM)", Toast.LENGTH_SHORT).show();
+        }
 
         list = (ListView) findViewById(R.id.list);
         new_item = (EditText) findViewById(R.id.new_item);

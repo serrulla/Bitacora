@@ -16,8 +16,8 @@ import java.util.List;
  * Created by pablofd on 06/03/2018.
  */
 
-public class ShoppingListAdapter extends ArrayAdapter<String> {
-    public ShoppingListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<String> objects) {
+public class ShoppingListAdapter extends ArrayAdapter<ShoppingItem> {
+    public ShoppingListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<ShoppingItem> objects) {
         super(context, resource, objects);
     }
 
@@ -32,8 +32,8 @@ public class ShoppingListAdapter extends ArrayAdapter<String> {
         }
 
         CheckBox checkBox = (CheckBox) root.findViewById(R.id.checkBox);
-        String item = getItem(position);
-        checkBox.setText(item);
+        ShoppingItem item = getItem(position);
+        checkBox.setText(item.getText());
 
         return root;
     }

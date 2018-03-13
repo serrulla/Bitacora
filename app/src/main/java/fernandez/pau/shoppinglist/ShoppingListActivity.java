@@ -15,7 +15,7 @@ import java.util.Locale;
 public class ShoppingListActivity extends AppCompatActivity {
 
     private ListView list;
-    private ArrayList<String> items; // Model de dades
+    private ArrayList<ShoppingItem> items; // Model de dades
     private ShoppingListAdapter adapter;
     private EditText new_item;
 
@@ -26,9 +26,9 @@ public class ShoppingListActivity extends AppCompatActivity {
 
         // Omplim el model de dades
         items = new ArrayList<>();
-        items.add("Patates");
-        items.add("Paper WC");
-        items.add("Ketchup");
+        items.add(new ShoppingItem("Patates"));
+        items.add(new ShoppingItem("Paper WC"));
+        items.add(new ShoppingItem("Ketchup"));
 
         list = (ListView) findViewById(R.id.list);
         new_item = (EditText) findViewById(R.id.new_item);
@@ -61,9 +61,9 @@ public class ShoppingListActivity extends AppCompatActivity {
     }
 
     public void onAddItem(View view) {
-        String item = new_item.getText().toString();
-        if (!item.isEmpty()) {
-            items.add(item);
+        String item_text = new_item.getText().toString();
+        if (!item_text.isEmpty()) {
+            items.add(new ShoppingItem(item_text));
             adapter.notifyDataSetChanged();
             new_item.setText("");
             list.smoothScrollToPosition(items.size() - 1);

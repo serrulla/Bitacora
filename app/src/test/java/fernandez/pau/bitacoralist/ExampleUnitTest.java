@@ -1,4 +1,4 @@
-package fernandez.pau.shoppinglist;
+package fernandez.pau.bitacoralist;
 
 import org.junit.Test;
 

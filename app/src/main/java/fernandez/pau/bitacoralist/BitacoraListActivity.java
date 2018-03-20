@@ -1,4 +1,4 @@
-package fernandez.pau.shoppinglist;
+package fernandez.pau.bitacoralist;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,20 +21,20 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-public class ShoppingListActivity extends AppCompatActivity {
+public class BitacoraListActivity extends AppCompatActivity {
 
     public static final String FILENAME = "items.txt";
     public static final int MAX_BYTES = 10000;
     private ListView list;
-    private ArrayList<ShoppingItem> items; // Model de dades
-    private ShoppingListAdapter adapter;
+    private ArrayList<BitacoraItem> items; // Model de dades
+    private BitacoraListAdapter adapter;
     private EditText new_item;
 
     private void writeItemList() {
         try {
             FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-            for (ShoppingItem item : items) {
-                String line = String.format("%s;%b\n", item.getText(), item.isChecked());
+            for (BitacoraItem item : items) {
+                String line = String.format("%s;%b\n", item.getText(), item.getTime());
                 fos.write(line.getBytes());
             }
             fos.close();
@@ -59,7 +59,7 @@ public class ShoppingListActivity extends AppCompatActivity {
                 for (String line : lines) {
                     if (!line.isEmpty()) {
                         String[] parts = line.split(";");
-                        items.add(new ShoppingItem(parts[0], parts[1].equals("true")));
+                        items.add(new BitacoraItem(parts[0]));
                     }
                 }
             }
@@ -81,22 +81,21 @@ public class ShoppingListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shopping_list);
+        setContentView(R.layout.activity_bitacora_list);
 
         if (!readItemList()) {
-            Toast.makeText(this, "Benvingut al ShoppingList(TM)", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Bienvenido a tu cuaderno de bitácoras", Toast.LENGTH_SHORT).show();
         }
 
         list = (ListView) findViewById(R.id.list);
         new_item = (EditText) findViewById(R.id.new_item);
 
-        adapter = new ShoppingListAdapter(this, R.layout.shopping_item, items);
+        adapter = new BitacoraListAdapter(this, R.layout.bitacora_item, items);
         list.setAdapter(adapter);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                items.get(pos).toggleChecked();
                 adapter.notifyDataSetChanged();
             }
         });
@@ -153,10 +152,15 @@ public class ShoppingListActivity extends AppCompatActivity {
     public void onAddItem(View view) {
         String item_text = new_item.getText().toString();
         if (!item_text.isEmpty()) {
-            items.add(new ShoppingItem(item_text));
+            items.add(new BitacoraItem(item_text));
             adapter.notifyDataSetChanged();
             new_item.setText("");
             list.smoothScrollToPosition(items.size() - 1);
         }
+    }
+
+    private void edit(String text, int position, int requestCode){
+        Intent intent = new Intent(this, Edit)
+
     }
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fondo_caixa"
-    tools:context="fernandez.pau.shoppinglist.ShoppingListActivity">
+    tools:context="fernandez.pau.bitacoralist.BitacoraListActivity">
 
 
     <EditText

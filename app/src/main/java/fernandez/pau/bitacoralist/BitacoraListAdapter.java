@@ -1,4 +1,4 @@
-package fernandez.pau.shoppinglist;
+package fernandez.pau.bitacoralist;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -16,8 +16,8 @@ import java.util.List;
  * Created by pablofd on 06/03/2018.
  */
 
-public class ShoppingListAdapter extends ArrayAdapter<ShoppingItem> {
-    public ShoppingListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<ShoppingItem> objects) {
+public class BitacoraListAdapter extends ArrayAdapter<BitacoraItem> {
+    public BitacoraListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<BitacoraItem> objects) {
         super(context, resource, objects);
     }
 
@@ -28,13 +28,15 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingItem> {
         View root = convertView; // arrel d'un item de la llista
         if (root == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            root = inflater.inflate(R.layout.shopping_item, parent, false);
+            root = inflater.inflate(R.layout.bitacora_item, parent, false);
         }
 
-        CheckBox checkBox = (CheckBox) root.findViewById(R.id.checkBox);
-        ShoppingItem item = getItem(position);
-        checkBox.setText(item.getText());
-        checkBox.setChecked(item.isChecked());
+        TextView bitacoraTitle = root.findViewById(R.id.bitacoraTitle);
+        BitacoraItem item = getItem(position);
+        bitacoraTitle.setText(item.getText());
+
+        TextView bitacoraTime = root.findViewById(R.id.bitacoraTime);
+        bitacoraTime.setText(item.getTime());
 
         return root;
     }

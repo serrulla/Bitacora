@@ -2,6 +2,7 @@ package fernandez.pau.bitacoralist;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -96,6 +97,7 @@ public class BitacoraListActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                edit(items.get(pos).getText(),pos, 0);
                 adapter.notifyDataSetChanged();
             }
         });
@@ -159,8 +161,20 @@ public class BitacoraListActivity extends AppCompatActivity {
         }
     }
 
-    private void edit(String text, int position, int requestCode){
-        Intent intent = new Intent(this, Edit)
+    private void edit(String text, int pos, int requestCode){
+        Intent intent = new Intent(this, EditTextActivity.class);
+        intent.putExtra("text",text);
+        intent.putExtra("pos",pos);
+        startActivityForResult(intent,requestCode);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            String text = data.getStringExtra("text");
+            int pos = data.getIntExtra("pos", 0);
+            items.get(pos).setText(text);
+            adapter.notifyDataSetChanged();
+        }
     }
 }

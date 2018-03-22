@@ -3,4 +3,9 @@
     <string name="confirm">Confirmació</string>
     <string name="bitacoraTitle">Title ee fjdf aidsf ehifw ijdwEIO FJ IFC ojfeif  fis dfie dofsd fos fo</string>
     <string name="bitacoraTime">12/02/2018 09:15</string>
+    <string name="bitacora">Bitacora</string>
+    <string name="save">Guardar</string>
+    <string name="back_title">Sortir sense guardar?</string>
+    <string name="back_alert">Sembla que has fet canvis. Si vols guardar aquests canvis fes click a Guarda. Si vols sortir sense guardar canvis polsa el botó enrere.</string>
+    <string name="dontsave">No guardar</string>
 </resources>

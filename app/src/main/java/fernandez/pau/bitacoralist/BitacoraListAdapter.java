@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -36,7 +39,18 @@ public class BitacoraListAdapter extends ArrayAdapter<BitacoraItem> {
         bitacoraTitle.setText(item.getText());
 
         TextView bitacoraTime = root.findViewById(R.id.bitacoraTime);
-        bitacoraTime.setText(item.getTime());
+
+        Date date = new Date();
+
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(item.getTime());
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int min  = calendar.get(Calendar.MINUTE);
+
+        bitacoraTime.setText(String.format("%02d/%02d/%04d %02d:%02d", day, month+1, year, hour+1, min));
 
         return root;
     }

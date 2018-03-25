@@ -10,12 +10,12 @@ import java.util.GregorianCalendar;
 
 public class BitacoraItem {
     private String text;
-    private String time;
+    private Date time = new Date();
 
 
     public BitacoraItem(String text) {
         this.text = text;
-        this.time = getCurrentTime();
+        this.time = new Date();
     }
 
     public String getText() {
@@ -25,6 +25,8 @@ public class BitacoraItem {
     public void setText(String text) {
         this.text = text;
     }
+
+    public Date getTime() { return time;}
 
 
     public String getCurrentTime() {
@@ -43,10 +45,5 @@ public class BitacoraItem {
         return String.format("%02d/%02d/%04d %02d:%02d", day, month+1, year, hour+1, min);
     }
 
-    public String getTime() { return time;}
-
-    public void setTime(String time) {
-        this.time = time;
-    }
 
 }
